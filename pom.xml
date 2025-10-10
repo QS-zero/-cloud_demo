@@ -8,10 +8,14 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <packaging>pom</packaging>
+
     <modules>
         <module>services</module>
     </modules>
+
+
     <groupId>org.example</groupId>
     <artifactId>cloud-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
