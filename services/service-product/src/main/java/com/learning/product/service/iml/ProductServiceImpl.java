@@ -1,7 +1,7 @@
 package com.learning.product.service.iml;
 import java.math.BigDecimal;
 
-import com.learning.product.bean.Product;
+import com.learning.prodect.bean.Product;
 import com.learning.product.service.ProductService;
 import org.springframework.stereotype.Service;
 

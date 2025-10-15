@@ -1,4 +1,4 @@
-package com.learning.order.bean.service;
+package com.learning.order.service;
 
 import com.learning.order.bean.Order;
 

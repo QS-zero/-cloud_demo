@@ -2,7 +2,7 @@ package com.learning.order.controller;
 
 
 import com.learning.order.bean.Order;
-import com.learning.order.bean.service.OrderService;
+import com.learning.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ public class OrderController {
 
     @GetMapping("/create-order")
     private Order createOrder(@RequestParam("productId") Long productId,
-                            @RequestParam("userId") Long userId){
+                              @RequestParam("userId") Long userId){
 
         Order order = orderService.createOrder(productId, userId);
 

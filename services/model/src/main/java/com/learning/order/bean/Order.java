@@ -1,6 +1,7 @@
 package com.learning.order.bean;
 
 
+import com.learning.prodect.bean.Product;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -36,6 +37,6 @@ public class Order {
     /**
      * 商品列表
      */
-    private List<Object> priductList;
+    private List<Product> priductList;
 
 }

@@ -1,7 +1,7 @@
 package com.learning.product.controller;
 
 
-import com.learning.product.bean.Product;
+import com.learning.prodect.bean.Product;
 import com.learning.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

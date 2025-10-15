@@ -1,4 +1,4 @@
-package com.learning.product.bean;
+package com.learning.prodect.bean;
 
 import lombok.Data;
 
