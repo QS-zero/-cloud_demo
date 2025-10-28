@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,10 +25,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
+
     @Override
     public Order createOrder(Long productId, Long userId) {
 
-        Product productFromRemote = getProductFromRemote(productId);
+        Product productFromRemote = getProductFromRemoteWithLoadbalancerAnnotation(productId);
 
         Order order = new Order();
         order.setId(1L);
@@ -41,6 +45,41 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    /**
+     * 注解负载均衡 调用商品接口
+     * @param productId
+     * @return
+     */
+    private Product getProductFromRemoteWithLoadbalancerAnnotation(Long productId){
+
+        String url = "http://service-product/get-product/" + productId;
+        // 2. 通过restTemplate远程调用，service-product会动态替换
+        return restTemplate.getForObject(url, Product.class);
+    }
+
+    /**
+     * 负载均衡 调用商品接口
+     * @param productId
+     * @return
+     */
+    private Product getProductFromRemoteWithLoadbalancer(Long productId){
+
+        //1. 获取目标服务所有机器的ip+port
+        ServiceInstance instance = loadBalancerClient.choose("service-product");
+        // 远程URL http://localhost:9000/get-product/20
+        String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/get-product/" + productId;
+        log.info("远程请求url:{}", url);
+        // 2. 通过restTemplate远程调用
+        Product product = restTemplate.getForObject(url, Product.class);
+
+        return product;
+    }
+
+    /**
+     * 无负载均衡 调用商品接口
+     * @param productId
+     * @return
+     */
     private Product getProductFromRemote(Long productId){
 
         //1. 获取目标服务所有机器的ip+port
