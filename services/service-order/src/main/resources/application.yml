@@ -1,14 +1,51 @@
+server:
+  port: 8000
+
 spring:
+  profiles:
+    active: dev
   application:
       name: service-order
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
+      config:
+        namespace: ${spring.profiles.active:dev}
   config:
-    import: nacos:service-order.yaml # yaml与yml都可以，社区yml多
+    import:
+      - nacos:common.yaml?group=order_group # yaml与yml都可以，社区yml多，先导入优先与外部优先
+      - nacos:database.yaml?group=order_group # yaml与yml都可以，社区yml多，先导入优先与外部优先
 
+order:
+  timeout: 30m
+  auto-confirm: 7d测试 # 当项目与配置中心有相同配置，以配置中心为准，
 
-
-server:
-  port: 8000
+---
+spring:
+  config:
+    import:
+      - nacos:common.yaml?group=order_group
+      - nacos:database.yaml?group=order_group
+      - nacos:1.yaml?group=order_group
+    activate:
+      on-profile: dev
+---
+spring:
+  config:
+    import:
+      - nacos:common.yaml?group=order_group
+      - nacos:database.yaml?group=order_group
+      - nacos:2.yaml?group=order_group
+    activate:
+      on-profile: test
+---
+spring:
+  config:
+    import:
+      - nacos:common.yaml?group=order_group
+      - nacos:database.yaml?group=order_group
+      - nacos:3.yaml?group=order_group
+      - nacos:4.yaml?group=order_group
+    activate:
+      on-profile: prod
 

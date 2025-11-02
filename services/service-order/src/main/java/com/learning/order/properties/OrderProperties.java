@@ -18,4 +18,6 @@ public class OrderProperties {
 
     private String autoConfirm;
 
+    private String dbUrl;
+
 }
