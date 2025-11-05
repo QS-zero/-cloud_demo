@@ -10,6 +10,8 @@ spring:
     nacos:
       server-addr: 127.0.0.1:8848
       config:
+        import-check:
+          enabled: false # 禁用nacos配置导入检查
         namespace: ${spring.profiles.active:dev}
   config:
     import:
@@ -20,6 +22,7 @@ order:
   timeout: 30m
   auto-confirm: 7d测试 # 当项目与配置中心有相同配置，以配置中心为准，
 
+# 配置文件,不同环境，不同配置文件
 ---
 spring:
   config:

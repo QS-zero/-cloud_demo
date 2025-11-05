@@ -21,10 +21,10 @@ public class OrderController {
     @Autowired
     private OrderProperties orderProperties;
 
-//    @Value("${order.timeout}")
+//    @Value("${order.timeout}") // @Value配合@RefreshScope 自动刷新
 //    private String timeout;
 //
-//    @Value("${order.auto-confirm}")
+//    @Value("${order.auto-confirm}") // @Value配合@RefreshScope 自动刷新
 //    private String autoConfirm;
 
     @GetMapping("/create-order")
