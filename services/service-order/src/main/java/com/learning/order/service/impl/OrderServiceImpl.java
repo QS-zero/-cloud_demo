@@ -1,6 +1,7 @@
 package com.learning.order.service.impl;
 
 import com.learning.order.bean.Order;
+import com.learning.order.feign.ProductFeignClient;
 import com.learning.order.service.OrderService;
 import com.learning.prodect.bean.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -27,18 +28,24 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Autowired
+    private ProductFeignClient productFeignClient;
+
     @Override
     public Order createOrder(Long productId, Long userId) {
 
-        Product productFromRemote = getProductFromRemoteWithLoadbalancerAnnotation(productId);
+//        Product product = getProductFromRemoteWithLoadbalancerAnnotation(productId);
+
+        // 使用Feign 调用商品接口
+        Product product = productFeignClient.getProductById(productId);
 
         Order order = new Order();
         order.setId(1L);
-        order.setTotalPrice(productFromRemote.getPrice().multiply(new BigDecimal(productFromRemote.getNum())));
+        order.setTotalPrice(product.getPrice().multiply(new BigDecimal(product.getNum())));
         order.setUserId(userId);
         order.setNickName("张三");
         order.setAddress("这是一个收到货地址");
-        order.setPriductList(List.of(productFromRemote));
+        order.setPriductList(List.of(product));
 
 
         return order;

@@ -18,6 +18,11 @@ spring:
       - nacos:common.yaml?group=order_group # yaml与yml都可以，社区yml多，先导入优先与外部优先
       - nacos:database.yaml?group=order_group # yaml与yml都可以，社区yml多，先导入优先与外部优先
 
+logging:
+  level:
+    com.learning.order.feign: debug
+
+
 order:
   timeout: 30m
   auto-confirm: 7d测试 # 当项目与配置中心有相同配置，以配置中心为准，
