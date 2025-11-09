@@ -1,5 +1,6 @@
 package com.learning.order.feign;
 
+import com.learning.order.feign.fallback.ProductFeignClientFallback;
 import com.learning.prodect.bean.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 
-@FeignClient(value = "service-product") // Feign客户端 自动负载均衡
+@FeignClient(value = "service-product",
+fallback = ProductFeignClientFallback.class) // Feign客户端 自动负载均衡
 public interface ProductFeignClient {
 
     /**

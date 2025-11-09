@@ -3,7 +3,8 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: dev # 开发环境
+    include: feign # 引入feign配置
   application:
       name: service-order
   cloud:

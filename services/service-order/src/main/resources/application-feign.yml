@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default: # 默认设置
+            logger-level:  full
+            connectTimeout: 1000
+            read-timeout: 2000
+          service-product: # 精确设置
+            logger-level:  full
+            connectTimeout: 3000
+            read-timeout: 5000
+#            response-interceptor: # 当前客户端配置的拦截器
+#              - com.learning.order.interceptor.XTokenRequestInterceptor
+#            retryer: feign.Retryer.Default
+
+feign:
+  sentinel:
+    enabled: true
